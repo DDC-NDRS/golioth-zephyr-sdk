@@ -54,7 +54,7 @@ file:
 
 .. code-block:: console
 
-   $ west build -- -DEXTRA_CONF_FILE=${ZEPHYR_GOLIOTH_MODULE_DIR}/samples/common/runtime_psk.conf
+   $ west build -- -DEXTRA_CONF_FILE=${ZEPHYR_GOLIOTH_MODULE_DIR}/samples/common/runtime_settings.conf
 
 Alternatively, you can add the following options to ``prj.conf``:
 
@@ -113,7 +113,7 @@ from the old firmware:
 
 .. code-block:: console
 
-   $ west build -b nrf9160dk_nrf9160_ns samples/dfu -- -DCONFIG_MCUBOOT_IMAGE_VERSION=\"1.2.3\"
+   $ west build -b nrf9160dk_nrf9160_ns samples/dfu -- -DCONFIG_MCUBOOT_IMGTOOL_SIGN_VERSION=\"1.2.3\"
 
 Start DFU using goliothctl
 ==========================
@@ -335,7 +335,7 @@ Related documentation:
 
 .. _authentication methods: https://docs.golioth.io/firmware/zephyr-device-sdk/authentication/
 .. _Zephyr Settings subsystem: https://docs.zephyrproject.org/latest/services/settings/index.html
-.. _MCUboot: https://docs.zephyrproject.org/3.4.0/services/device_mgmt/dfu.html#mcuboot
-.. _Signing Binaries: https://docs.zephyrproject.org/3.4.0/develop/west/sign.html#west-sign
-.. _Flash map: https://docs.zephyrproject.org/3.4.0/services/storage/flash_map/flash_map.html
+.. _MCUboot: https://docs.zephyrproject.org/3.5.0/services/device_mgmt/dfu.html#mcuboot
+.. _Signing Binaries: https://docs.zephyrproject.org/3.5.0/develop/west/sign.html#west-sign
+.. _Flash map: https://docs.zephyrproject.org/3.5.0/services/storage/flash_map/flash_map.html
 .. _AT Binary Lists: https://docs.espressif.com/projects/esp-at/en/latest/AT_Binary_Lists/index.html

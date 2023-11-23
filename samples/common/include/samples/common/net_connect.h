@@ -17,7 +17,11 @@ extern "C" {
  * @{
  */
 
+#ifdef CONFIG_NET_CONFIG_NEED_IPV4
+static inline void net_connect(void) {}
+#else
 void net_connect(void);
+#endif
 
 /** @} */
 

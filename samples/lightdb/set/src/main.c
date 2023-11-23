@@ -38,7 +38,8 @@ static void counter_set_async(int counter)
 	char sbuf[sizeof("4294967295")];
 	int err;
 
-	snprintk(sbuf, sizeof(sbuf) - 1, "%d", counter);
+	snprintk(sbuf, sizeof(sbuf), "%d", counter);
+	sbuf[sizeof(sbuf) - 1] = '\0';
 
 	err = golioth_lightdb_set_cb(client, "counter",
 				     GOLIOTH_CONTENT_FORMAT_APP_JSON,
@@ -55,7 +56,8 @@ static void counter_set_sync(int counter)
 	char sbuf[sizeof("4294967295")];
 	int err;
 
-	snprintk(sbuf, sizeof(sbuf) - 1, "%d", counter);
+	snprintk(sbuf, sizeof(sbuf), "%d", counter);
+	sbuf[sizeof(sbuf) - 1] = '\0';
 
 	err = golioth_lightdb_set(client, "counter",
 				  GOLIOTH_CONTENT_FORMAT_APP_JSON,
@@ -74,9 +76,7 @@ int main(void)
 
 	LOG_DBG("Start LightDB set sample");
 
-	if (IS_ENABLED(CONFIG_GOLIOTH_SAMPLES_COMMON)) {
-		net_connect();
-	}
+	net_connect();
 
 	client->on_connect = golioth_on_connect;
 	golioth_system_client_start();

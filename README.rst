@@ -100,64 +100,64 @@ During release testing, all boards and services are verified using sample applic
 |                  |              |             |Golioth   |
 |                  |              |             |version   |
 +==================+==============+=============+==========+
-|nRF91 Development |Authentication|v0.7.1       |v0.30.7   |
+|nRF91 Development |Authentication|v0.8.0       |v0.30.7   |
 |Kit               +--------------+-------------+          |
-|                  |Logs          |v0.7.1       |          |
+|                  |Logs          |v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |DFU           |v0.7.1       |          |
+|                  |DFU           |v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |LightDB       |v0.7.1       |          |
+|                  |LightDB       |v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |LightDB Stream|v0.7.1       |          |
+|                  |LightDB Stream|v0.8.0       |          |
 +------------------+--------------+-------------+----------+
-|ESP32-WROOM-32D   |Authentication|v0.7.1       |v0.30.7   |
+|ESP32-WROOM-32D   |Authentication|v0.8.0       |v0.30.7   |
 |                  +--------------+-------------+          |
-|                  |Logs          |v0.7.1       |          |
+|                  |Logs          |v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |DFU           |v0.7.1       |          |
+|                  |DFU           |v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |LightDB       |v0.7.1       |          |
+|                  |LightDB       |v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |LightDB Stream|v0.7.1       |          |
+|                  |LightDB Stream|v0.8.0       |          |
 +------------------+--------------+-------------+----------+
-|nRF52840 DK +     |Authentication|v0.7.1       |v0.30.7   |
+|nRF52840 DK +     |Authentication|v0.8.0       |v0.30.7   |
 |ESP32-WROOM-32D   +--------------+-------------+          |
-|                  |Logs          |v0.7.1       |          |
+|                  |Logs          |v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |DFU           |v0.7.1       |          |
+|                  |DFU           |v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |LightDB       |v0.7.1       |          |
+|                  |LightDB       |v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |LightDB Stream|v0.7.1       |          |
+|                  |LightDB Stream|v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |Settings      |v0.7.1       |          |
+|                  |Settings      |v0.8.0       |          |
 +------------------+--------------+-------------+----------+
-|MIMXRT1060-EVKB   |Authentication|v0.7.1       |v0.30.7   |
+|MIMXRT1060-EVKB   |Authentication|v0.8.0       |v0.30.7   |
 |                  +--------------+-------------+          |
-|                  |Logs          |v0.7.1       |          |
+|                  |Logs          |v0.8.0       |          |
 |                  +--------------+-------------+          |
 |                  |DFU           |N/A          |          |
 |                  +--------------+-------------+          |
-|                  |LightDB       |v0.7.1       |          |
+|                  |LightDB       |v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |LightDB Stream|v0.7.1       |          |
+|                  |LightDB Stream|v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |Settings      |v0.7.1       |          |
+|                  |Settings      |v0.8.0       |          |
 +------------------+--------------+-------------+----------+
-|QEMU x86          |Authentication|v0.7.1       |v0.30.7   |
+|QEMU x86          |Authentication|v0.8.0       |v0.30.7   |
 |                  +--------------+-------------+          |
-|                  |Logs          |v0.7.1       |          |
+|                  |Logs          |v0.8.0       |          |
 |                  +--------------+-------------+          |
 |                  |DFU           |Not supported|          |
 |                  +--------------+-------------+          |
-|                  |LightDB       |v0.7.1       |          |
+|                  |LightDB       |v0.8.0       |          |
 |                  +--------------+-------------+          |
-|                  |LightDB Stream|v0.7.1       |          |
+|                  |LightDB Stream|v0.8.0       |          |
 +------------------+--------------+-------------+----------+
 
 .. _Zephyr RTOS: https://www.zephyrproject.org/
-.. _west: https://docs.zephyrproject.org/3.4.0/develop/west/index.html
-.. _Zephyr Getting Started: https://docs.zephyrproject.org/3.4.0/develop/getting_started/index.html
+.. _west: https://docs.zephyrproject.org/3.5.0/develop/west/index.html
+.. _Zephyr Getting Started: https://docs.zephyrproject.org/3.5.0/develop/getting_started/index.html
 .. _nRF Connect SDK: https://www.nordicsemi.com/Software-and-tools/Software/nRF-Connect-SDK
 .. _nRF Connect SDK Getting Started: https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/gs_installing.html
 .. _nRF9160 DK: https://www.nordicsemi.com/Products/Development-hardware/nrf9160-dk
