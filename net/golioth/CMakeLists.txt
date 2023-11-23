@@ -60,3 +60,6 @@ endif()
 if(NOT EXISTS ${ZEPHYR_BASE}/include/zephyr/random/random.h)
   zephyr_library_include_directories(include_random)
 endif()
+
+# CUSTOM@NDRS
+zephyr_library_include_directories(${ZEPHYR_BASE}/../modules/crypto/mbedtls/include)
