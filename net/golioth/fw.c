@@ -105,7 +105,7 @@ int golioth_fw_desired_parse(const uint8_t *payload, uint16_t payload_len,
 			     uint8_t *version, size_t *version_len,
 			     uint8_t *uri, size_t *uri_len)
 {
-	ZCBOR_STATE_D(zsd, 3, payload, payload_len, 1);
+	ZCBOR_STATE_D(zsd, 3, payload, payload_len, 1, 0);
 	int64_t manifest_sequence_number;
 	struct component_info component_info = {
 		.version = {version, version_len},
@@ -179,6 +179,7 @@ static int fw_report_state_encode(zcbor_state_t *zse,
 				  enum golioth_dfu_result result)
 {
 	bool ok;
+	size_t len;
 
 	ok = zcbor_map_start_encode(zse, 1);
 	if (!ok) {
@@ -199,16 +200,18 @@ static int fw_report_state_encode(zcbor_state_t *zse,
 	}
 
 	if (current_version && current_version[0] != '\0') {
+		len = strlen(current_version);
 		ok = zcbor_tstr_put_lit(zse, "v") &&
-		     zcbor_tstr_put_term(zse, current_version);
+		     zcbor_tstr_put_term(zse, current_version, len);
 		if (!ok) {
 			return -ENOMEM;
 		}
 	}
 
 	if (target_version && target_version[0] != '\0') {
+		len = strlen(target_version);
 		ok = zcbor_tstr_put_lit(zse, "t") &&
-		     zcbor_tstr_put_term(zse, target_version);
+		     zcbor_tstr_put_term(zse, target_version, len);
 		if (!ok) {
 			return -ENOMEM;
 		}

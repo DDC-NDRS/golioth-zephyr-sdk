@@ -40,7 +40,7 @@ struct zcbor_map_entry {
  */
 static inline bool zcbor_list_or_map_end(zcbor_state_t *state)
 {
-	if (state->indefinite_length_array) {
+	if (state->decode_state.indefinite_length_array) {
 		return *state->payload == 0xff;
 	}
 
