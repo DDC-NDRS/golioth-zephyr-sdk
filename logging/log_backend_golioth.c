@@ -22,6 +22,7 @@
 #endif
 
 #define LOGS_URI_PATH		"logs"
+#define LOGS_PUT_TERM_MAX_LEN	256     /* #CUSTOM@NDRS */
 #define CBOR_SPACE_RESERVED	8
 
 /* Based on ZCBOR_STATE_E() */
@@ -124,11 +125,13 @@ static void log_cbor_append_headers(struct golioth_log_ctx *ctx,
 				log_const_source_id(source));
 
 		zcbor_tstr_put_lit(cbor->zse, "module");
-		zcbor_tstr_put_term(cbor->zse, log_source_name_get(domain_id, source_id));
+		zcbor_tstr_put_term(cbor->zse, log_source_name_get(domain_id, source_id),
+				    LOGS_PUT_TERM_MAX_LEN);
 	}
 
 	zcbor_tstr_put_lit(cbor->zse, "level");
-	zcbor_tstr_put_term(cbor->zse, level_str(log_msg_get_level(msg)));
+	zcbor_tstr_put_term(cbor->zse, level_str(log_msg_get_level(msg)),
+			    LOGS_PUT_TERM_MAX_LEN);
 }
 
 static int log_packet_prepare(struct golioth_log_ctx *ctx)
