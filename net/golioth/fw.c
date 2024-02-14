@@ -155,7 +155,7 @@ int golioth_fw_download(struct golioth_client *client,
 				   cb, user_data);
 	if (err) {
 		LOG_ERR("Failed to initialize CoAP GET request: %d", err);
-		goto free_req;
+		return err;
 	}
 
 	err = coap_packet_append_uri_path_from_string(&req->request, uri, uri_len);
@@ -164,7 +164,12 @@ int golioth_fw_download(struct golioth_client *client,
 		goto free_req;
 	}
 
-	return golioth_coap_req_schedule(req);
+	err = golioth_coap_req_schedule(req);
+	if (err) {
+		goto free_req;
+	}
+
+	return 0;
 
 free_req:
 	golioth_coap_req_free(req);
