@@ -101,11 +101,17 @@ static int settings_read_callback(const char *key,
 				  void            *param)
 {
 	ssize_t num_read_bytes = MIN(len, SETTINGS_MAX_VAL_LEN);
-	uint8_t buffer[num_read_bytes + 1];
+	uint8_t* buffer = (uint8_t*)malloc((num_read_bytes + 1) * sizeof(uint8_t));
+	// uint8_t buffer[num_read_bytes + 1];
 	struct settings_read_callback_params *params = param;
+
+	if (buffer == NULL) {
+		return 0;
+	}
 
 	/* Process only the exact match and ignore descendants of the searched name */
 	if (settings_name_next(key, NULL) != 0) {
+		free(buffer);
 		return 0;
 	}
 
@@ -116,7 +122,7 @@ static int settings_read_callback(const char *key,
 		shell_json_error(params->shell_ptr, params->json_output,
 				 "Failed to read value: %d",
 				 (int)num_read_bytes);
-
+		free(buffer);
 		return 0;
 	}
 
@@ -129,7 +135,7 @@ static int settings_read_callback(const char *key,
 	if (len > SETTINGS_MAX_VAL_LEN) {
 		shell_print(params->shell_ptr, "(The output has been truncated)");
 	}
-
+	free(buffer);
 	return 0;
 }
 
