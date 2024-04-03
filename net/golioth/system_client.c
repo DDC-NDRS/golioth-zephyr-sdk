@@ -23,11 +23,15 @@ LOG_MODULE_REGISTER(golioth_system, CONFIG_GOLIOTH_SYSTEM_CLIENT_LOG_LEVEL);
 
 static char golioth_system_server_host[40] = CONFIG_GOLIOTH_SYSTEM_SERVER_HOST;
 
+#if defined(_MSC_VER)
+static const uint8_t tls_ca_crt[] = {"  "};
+#else
 static const uint8_t tls_ca_crt[] = {
 #if defined(CONFIG_GOLIOTH_SYSTEM_CLIENT_CA_PATH)
 #include "golioth-systemclient-ca.inc"
 #endif
 };
+#endif
 
 #define PING_INTERVAL		(CONFIG_GOLIOTH_SYSTEM_CLIENT_PING_INTERVAL_SEC * 1000)
 #define RECV_TIMEOUT		(CONFIG_GOLIOTH_SYSTEM_CLIENT_RX_TIMEOUT_SEC * 1000)
@@ -284,6 +288,12 @@ static void client_disconnect(struct golioth_client *client)
 	k_work_cancel_delayable_sync(&eventfd_timeout, &sync);
 }
 
+#if defined(_MSC_VER)
+static struct k_sem sys_client_started;
+static void wait_for_client_start(void) {
+    /* pass */
+}
+#else
 K_SEM_DEFINE(sys_client_started, 0, 1);
 static struct k_poll_event sys_client_poll_start =
 	K_POLL_EVENT_STATIC_INITIALIZER(K_POLL_TYPE_SEM_AVAILABLE,
@@ -295,6 +305,7 @@ static void wait_for_client_start(void)
 	k_poll(&sys_client_poll_start, 1, K_FOREVER);
 	sys_client_poll_start.state = K_POLL_STATE_NOT_READY;
 }
+#endif
 
 static void golioth_system_client_main(void *arg1, void *arg2, void *arg3)
 {
@@ -335,8 +346,8 @@ static void golioth_system_client_main(void *arg1, void *arg2, void *arg3)
 
 		golioth_poll_prepare(client, k_uptime_get(), NULL, &golioth_timeout);
 
-		timeout = MIN(recv_expiry, ping_expiry) - k_uptime_get();
-		timeout = MIN(timeout, golioth_timeout);
+		timeout = (int)(MIN(recv_expiry, ping_expiry) - k_uptime_get());
+		timeout = MIN(timeout, (int)golioth_timeout);
 
 		if (timeout < 0) {
 			timeout = 0;
@@ -407,10 +418,14 @@ static void golioth_system_client_main(void *arg1, void *arg2, void *arg3)
 	}
 }
 
+#if defined(_MSC_VER)
+/* pass */
+#else
 K_THREAD_DEFINE(golioth_system, CONFIG_GOLIOTH_SYSTEM_CLIENT_STACK_SIZE,
 		golioth_system_client_main,
 		GOLIOTH_SYSTEM_CLIENT_GET(), NULL, NULL,
 		CONFIG_GOLIOTH_SYSTEM_CLIENT_THREAD_PRIORITY, 0, 0);
+#endif
 
 void golioth_system_client_start(void)
 {

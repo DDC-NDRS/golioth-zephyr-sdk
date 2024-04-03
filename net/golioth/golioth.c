@@ -159,13 +159,13 @@ static int __golioth_send_empty_coap(struct golioth_client *client)
 }
 
 static int golioth_connect_sockaddr(struct golioth_client *client, const char *host,
-				    struct sockaddr *addr, socklen_t addrlen)
+				    struct net_sockaddr *addr, socklen_t addrlen)
 {
 	int sock;
 	int ret;
 	int err = 0;
 
-	sock = zsock_socket(addr->sa_family, SOCK_DGRAM, client->proto);
+	sock = zsock_socket(addr->sa_family, NET_SOCK_DGRAM, client->proto);
 	if (sock < 0) {
 		return -errno;
 	}
@@ -207,11 +207,11 @@ close_sock:
 	do {								\
 		char buf[NET_IPV6_ADDR_LEN];				\
 									\
-		if (addr->sa_family == AF_INET6) {			\
-			net_addr_ntop(AF_INET6, &net_sin6(addr)->sin6_addr, \
+		if (addr->sa_family == NET_AF_INET6) {			\
+			net_addr_ntop(NET_AF_INET6, &net_sin6(addr)->sin6_addr, \
 				      buf, sizeof(buf));		\
-		} else if (addr->sa_family == AF_INET) {		\
-			net_addr_ntop(AF_INET, &net_sin(addr)->sin_addr, \
+		} else if (addr->sa_family == NET_AF_INET) {		\
+			net_addr_ntop(NET_AF_INET, &net_sin(addr)->sin_addr, \
 				      buf, sizeof(buf));		\
 		}							\
 									\
@@ -225,9 +225,9 @@ static int __golioth_connect(struct golioth_client *client,
 			     const char *host, uint16_t port)
 {
 	struct zsock_addrinfo hints = {
-		.ai_family = AF_UNSPEC,
-		.ai_socktype = SOCK_DGRAM,
-		.ai_protocol = IPPROTO_UDP,
+		.ai_family = NET_AF_UNSPEC,
+		.ai_socktype = NET_SOCK_DGRAM,
+		.ai_protocol = NET_IPPROTO_UDP,
 	};
 	struct zsock_addrinfo *addrs, *addr;
 	char port_str[8];
@@ -305,7 +305,7 @@ int golioth_set_proto_coap_dtls(struct golioth_client *client,
 		return -EINVAL;
 	}
 
-	client->proto = IPPROTO_DTLS_1_2;
+	client->proto = NET_IPPROTO_DTLS_1_2;
 	client->tls.sec_tag_list = sec_tag_list;
 	client->tls.sec_tag_count = sec_tag_count;
 

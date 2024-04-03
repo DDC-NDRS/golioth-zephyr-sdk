@@ -22,14 +22,36 @@ enum golioth_content_format {
 	GOLIOTH_CONTENT_FORMAT_APP_CBOR = COAP_CONTENT_FORMAT_APP_CBOR,
 };
 
+#if defined(_MSC_VER) /* #CUSTOM@NDRS */
+#include "zcbor_common.h"
+typedef enum golioth_rpc_status(*golioth_rpc_cb_fn)(zcbor_state_t* request_params_array,
+						    zcbor_state_t* response_detail_map,
+						    void* callback_arg);
+
+struct golioth_rpc_method {
+	const char* name;
+	golioth_rpc_cb_fn callback;
+	void* callback_arg;
+};
+
+typedef enum golioth_settings_status(*golioth_settings_cb)(const char* key,
+							   const struct golioth_settings_value* value);
+#endif
+
 /**
  * @brief Global/shared RPC state data, placed in struct golioth_client
  */
 struct golioth_rpc {
+#if defined(_MSC_VER) /* #CUSTOM@NDRS */
+	struct golioth_rpc_method methods[8];
+	int num_methods;
+	struct k_mutex mutex;
+#else
 #if defined(CONFIG_GOLIOTH_RPC)
 	struct golioth_rpc_method methods[CONFIG_GOLIOTH_RPC_MAX_NUM_METHODS];
 	int num_methods;
 	struct k_mutex mutex;
+#endif
 #endif
 };
 
@@ -37,7 +59,7 @@ struct golioth_rpc {
  * @brief Settings state data, placed in struct golioth_client
  */
 struct golioth_settings {
-#if defined(CONFIG_GOLIOTH_SETTINGS)
+#if defined(CONFIG_GOLIOTH_SETTINGS) || defined(_MSC_VER) /* #CUSTOM@NDRS */
 	bool initialized;
 	golioth_settings_cb callback;
 #endif

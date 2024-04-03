@@ -40,12 +40,12 @@ static int sock_wrapper_create(int family, int type, int proto);
 
 static ssize_t sock_wrapper_recvfrom_vmeth(void *obj, void *buf,
 					   size_t max_len, int flags,
-					   struct sockaddr *addr,
+					   struct net_sockaddr *addr,
 					   socklen_t *addrlen);
 
 static ssize_t sock_wrapper_sendto_vmeth(void *obj, const void *buf,
 					 size_t len, int flags,
-					 const struct sockaddr *addr,
+					 const struct net_sockaddr *addr,
 					 socklen_t addrlen);
 
 static void __wrapper_ctx_free(struct wrapper_context *wrapper)
@@ -64,7 +64,7 @@ static int sock_wrapper_socket(int family, int type, int proto, bool *is_offload
 		}
 
 		if (sock_family->family != family &&
-		    sock_family->family != AF_UNSPEC) {
+		    sock_family->family != NET_AF_UNSPEC) {
 			continue;
 		}
 
@@ -209,14 +209,14 @@ static int sock_wrapper_shutdown_vmeth(void *obj, int how)
 	return zsock_shutdown(wrapper->fd, how);
 }
 
-static int sock_wrapper_bind_vmeth(void *obj, const struct sockaddr *addr, socklen_t addrlen)
+static int sock_wrapper_bind_vmeth(void *obj, const struct net_sockaddr *addr, socklen_t addrlen)
 {
 	struct wrapper_context *wrapper = obj;
 
 	return zsock_bind(wrapper->fd, addr, addrlen);
 }
 
-static int sock_wrapper_connect_vmeth(void *obj, const struct sockaddr *addr,
+static int sock_wrapper_connect_vmeth(void *obj, const struct net_sockaddr *addr,
 				      socklen_t addrlen)
 {
 	struct wrapper_context *wrapper = obj;
@@ -231,7 +231,7 @@ static int sock_wrapper_listen_vmeth(void *obj, int backlog)
 	return zsock_listen(wrapper->fd, backlog);
 }
 
-static int sock_wrapper_accept_vmeth(void *obj, struct sockaddr *addr, socklen_t *addrlen)
+static int sock_wrapper_accept_vmeth(void *obj, struct net_sockaddr *addr, socklen_t *addrlen)
 {
 	struct wrapper_context *wrapper = obj;
 
@@ -240,7 +240,7 @@ static int sock_wrapper_accept_vmeth(void *obj, struct sockaddr *addr, socklen_t
 
 static ssize_t sock_wrapper_sendto_vmeth(void *obj, const void *buf,
 					 size_t len, int flags,
-					 const struct sockaddr *addr,
+					 const struct net_sockaddr *addr,
 					 socklen_t addrlen)
 {
 	struct wrapper_context *wrapper = obj;
@@ -258,7 +258,7 @@ static ssize_t sock_wrapper_sendmsg_vmeth(void *obj, const struct msghdr *msg,
 
 static ssize_t sock_wrapper_recvfrom_vmeth(void *obj, void *buf,
 					   size_t max_len, int flags,
-					   struct sockaddr *addr,
+					   struct net_sockaddr *addr,
 					   socklen_t *addrlen)
 {
 	struct wrapper_context *wrapper = obj;
@@ -309,7 +309,7 @@ static int sock_wrapper_close_vmeth(void *obj)
 	return retval;
 }
 
-static int sock_wrapper_getpeername_vmeth(void *obj, struct sockaddr *addr,
+static int sock_wrapper_getpeername_vmeth(void *obj, struct net_sockaddr *addr,
 					  socklen_t *addrlen)
 {
 	struct wrapper_context *wrapper = obj;
@@ -317,7 +317,7 @@ static int sock_wrapper_getpeername_vmeth(void *obj, struct sockaddr *addr,
 	return zsock_getpeername(wrapper->fd, addr, addrlen);
 }
 
-static int sock_wrapper_getsockname_vmeth(void *obj, struct sockaddr *addr,
+static int sock_wrapper_getsockname_vmeth(void *obj, struct net_sockaddr *addr,
 					  socklen_t *addrlen)
 {
 	struct wrapper_context *wrapper = obj;
@@ -444,7 +444,7 @@ static bool is_supported(int family, int type, int proto)
 
 NET_SOCKET_REGISTER(sock_wrapper,
 		    CONFIG_NET_SOCKETS_OFFLOAD_POLL_WRAPPER_SOCKET_PRIORITY,
-		    AF_UNSPEC, is_supported,
+		    NET_AF_UNSPEC, is_supported,
 		    sock_wrapper_create);
 
 static int sock_wrapper_init(void)

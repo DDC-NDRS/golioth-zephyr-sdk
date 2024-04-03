@@ -9,11 +9,11 @@
 
 #include <net/golioth.h>
 
-extern struct golioth_client _golioth_system_client;
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+extern struct golioth_client _golioth_system_client;
 
 /**
  * @defgroup system_client Golioth System Client

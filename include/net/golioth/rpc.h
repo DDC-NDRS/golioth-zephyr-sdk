@@ -51,6 +51,7 @@ enum golioth_rpc_status {
 	GOLIOTH_RPC_UNAUTHENTICATED = 16,
 };
 
+#if !defined(_MSC_VER) /* #CUSTOM@NDRS */
 /**
  * @brief Callback function type for remote procedure call
  *
@@ -101,8 +102,8 @@ enum golioth_rpc_status {
  * @return otherwise - method failure
  */
 typedef enum golioth_rpc_status (*golioth_rpc_cb_fn)(zcbor_state_t *request_params_array,
-						     zcbor_state_t *response_detail_map,
-						     void *callback_arg);
+								 zcbor_state_t *response_detail_map,
+								 void *callback_arg);
 
 /**
  * @brief Data for each registered RPC method
@@ -112,6 +113,7 @@ struct golioth_rpc_method {
 	golioth_rpc_cb_fn callback;
 	void *callback_arg;
 };
+#endif
 
 #ifdef __cplusplus
 extern "C" {
